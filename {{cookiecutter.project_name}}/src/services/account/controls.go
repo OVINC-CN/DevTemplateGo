@@ -10,7 +10,7 @@ import (
 	"net/http"
 )
 
-func Login(c *gin.Context) {
+func SignIn(c *gin.Context) {
 	// 验证请求
 	var form loginForm
 	if err := c.ShouldBind(&form); err != nil {
@@ -99,4 +99,12 @@ func SignOut(c *gin.Context) {
 		configs.SessionConfig.SessionCookieHttpOnly,
 	)
 	c.JSON(http.StatusOK, gin.H{"data": gin.H{}})
+}
+
+func UserInfo(c *gin.Context) {
+	user := GetContextUser(c)
+	c.JSON(
+		http.StatusOK,
+		gin.H{"data": gin.H{"username": user.Username, "nick_name": user.NickName}},
+	)
 }

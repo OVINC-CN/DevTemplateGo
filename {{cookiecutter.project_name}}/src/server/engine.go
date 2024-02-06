@@ -41,10 +41,10 @@ func setupRouter() (engine *gin.Engine) {
 	// Account
 	accountGroup := engine.Group("/account/")
 	{
-		accountGroup.POST("/sign_in/", account.Login)
+		accountGroup.POST("/sign_in/", account.SignIn)
 		accountGroup.POST("/sign_up/", account.SignUp)
 		accountGroup.POST("/sign_out/", middlewares.LoginRequired(), account.SignOut)
-		accountGroup.POST("/user_info/", middlewares.LoginRequired(), account.UserInfo)
+		accountGroup.GET("/user_info/", middlewares.LoginRequired(), account.UserInfo)
 	}
 	return
 }
