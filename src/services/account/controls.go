@@ -2,8 +2,8 @@ package account
 
 import (
 	"context"
-	"github.com/OrenZhang/GoDevTest/src/configs"
-	"github.com/OrenZhang/GoDevTest/src/db"
+	"github.com/OVINC-CN/DevTemplateGo/src/configs"
+	"github.com/OVINC-CN/DevTemplateGo/src/db"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )

@@ -3,7 +3,7 @@ package db
 import (
 	"context"
 	"fmt"
-	"github.com/OrenZhang/GoDevTest/src/utils"
+	"github.com/OVINC-CN/DevTemplateGo/src/utils"
 	"github.com/redis/go-redis/v9"
 )
 

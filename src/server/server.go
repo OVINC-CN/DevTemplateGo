@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/OrenZhang/GoDevTest/src/configs"
-	"github.com/OrenZhang/GoDevTest/src/db"
-	"github.com/OrenZhang/GoDevTest/src/services/account"
-	"github.com/OrenZhang/GoDevTest/src/utils"
+	"github.com/OVINC-CN/DevTemplateGo/src/configs"
+	"github.com/OVINC-CN/DevTemplateGo/src/db"
+	"github.com/OVINC-CN/DevTemplateGo/src/services/account"
+	"github.com/OVINC-CN/DevTemplateGo/src/utils"
 )
 
 func startServer() {

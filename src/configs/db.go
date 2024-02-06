@@ -1,6 +1,6 @@
 package configs
 
-import "github.com/OrenZhang/GoDevTest/src/utils"
+import "github.com/OVINC-CN/DevTemplateGo/src/utils"
 
 type dbConfigModel struct {
 	Host     string

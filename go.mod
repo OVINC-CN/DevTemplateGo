@@ -1,4 +1,4 @@
-module github.com/OrenZhang/GoDevTest
+module github.com/OVINC-CN/DevTemplateGo
 
 go 1.20
 

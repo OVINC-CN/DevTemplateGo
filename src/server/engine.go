@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/OrenZhang/GoDevTest/src/configs"
-	"github.com/OrenZhang/GoDevTest/src/middlewares"
-	"github.com/OrenZhang/GoDevTest/src/services/account"
-	"github.com/OrenZhang/GoDevTest/src/services/home"
+	"github.com/OVINC-CN/DevTemplateGo/src/configs"
+	"github.com/OVINC-CN/DevTemplateGo/src/middlewares"
+	"github.com/OVINC-CN/DevTemplateGo/src/services/account"
+	"github.com/OVINC-CN/DevTemplateGo/src/services/home"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"

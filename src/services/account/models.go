@@ -2,9 +2,9 @@ package account
 
 import (
 	"context"
-	"github.com/OrenZhang/GoDevTest/src/configs"
-	"github.com/OrenZhang/GoDevTest/src/db"
-	"github.com/OrenZhang/GoDevTest/src/utils"
+	"github.com/OVINC-CN/DevTemplateGo/src/configs"
+	"github.com/OVINC-CN/DevTemplateGo/src/db"
+	"github.com/OVINC-CN/DevTemplateGo/src/utils"
 	"golang.org/x/crypto/bcrypt"
 	"time"
 )

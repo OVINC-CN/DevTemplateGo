@@ -1,7 +1,7 @@
 package configs
 
 import (
-	"github.com/OrenZhang/GoDevTest/src/utils"
+	"github.com/OVINC-CN/DevTemplateGo/src/utils"
 	"github.com/sirupsen/logrus"
 	"os"
 )
