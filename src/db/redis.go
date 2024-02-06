@@ -9,11 +9,12 @@ import (
 
 var Redis *redis.Client
 
-func InitRedisConnection(host, port, password string, db int) {
+func InitRedisConnection(host, port, password string, db, maxConnections int) {
 	Redis = redis.NewClient(&redis.Options{
-		Addr:     fmt.Sprintf("%s:%s", host, port),
-		Password: password,
-		DB:       db,
+		Addr:           fmt.Sprintf("%s:%s", host, port),
+		Password:       password,
+		DB:             db,
+		MaxActiveConns: maxConnections,
 	})
 	status := Redis.Ping(context.Background())
 	utils.Logger.Infof("[InitRedisConnectionSuccess] %T %s", Redis, status)
