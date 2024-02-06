@@ -2,7 +2,7 @@ package configs
 
 import (
 	"fmt"
-	"github.com/OrenZhang/GoDevTest/src/utils"
+	"github.com/OVINC-CN/DevTemplateGo/src/utils"
 	"os"
 	"strconv"
 )

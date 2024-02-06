@@ -1,7 +1,7 @@
 package middlewares
 
 import (
-	"github.com/OrenZhang/GoDevTest/src/utils"
+	"github.com/OVINC-CN/DevTemplateGo/src/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 )

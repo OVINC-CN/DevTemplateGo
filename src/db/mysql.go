@@ -2,7 +2,7 @@ package db
 
 import (
 	"fmt"
-	"github.com/OrenZhang/GoDevTest/src/utils"
+	"github.com/OVINC-CN/DevTemplateGo/src/utils"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )

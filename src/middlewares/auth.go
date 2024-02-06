@@ -1,8 +1,8 @@
 package middlewares
 
 import (
-	"github.com/OrenZhang/GoDevTest/src/configs"
-	"github.com/OrenZhang/GoDevTest/src/services/account"
+	"github.com/OVINC-CN/DevTemplateGo/src/configs"
+	"github.com/OVINC-CN/DevTemplateGo/src/services/account"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
