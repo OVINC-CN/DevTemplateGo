@@ -30,7 +30,15 @@ func StrToBool(key string) bool {
 	return !keyInArray(strings.ToLower(key), []string{"0", "false", "no", "n"})
 }
 
-func StrToInt(key string) int64 {
+func StrToInt(key string) int {
+	numVal, err := strconv.Atoi(key)
+	if err != nil {
+		panic(err)
+	}
+	return numVal
+}
+
+func StrToInt64(key string) int64 {
 	numVal, err := strconv.ParseInt(key, 10, 64)
 	if err != nil {
 		panic(err)

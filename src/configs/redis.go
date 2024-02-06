@@ -6,7 +6,7 @@ type redisConfigModel struct {
 	Host     string
 	Port     string
 	Password string
-	DB       int64
+	DB       int
 	Prefix   string
 }
 

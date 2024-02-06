@@ -14,7 +14,7 @@ func startServer() {
 	db.InitDBConnection(configs.DBConfig.Host, configs.DBConfig.Port, configs.DBConfig.User, configs.DBConfig.Password, configs.DBConfig.Name)
 	migrate()
 	// init redis
-	db.InitRedisConnection(configs.RedisConfig.Host, configs.RedisConfig.Port, configs.RedisConfig.Password, int(configs.RedisConfig.DB))
+	db.InitRedisConnection(configs.RedisConfig.Host, configs.RedisConfig.Port, configs.RedisConfig.Password, configs.RedisConfig.DB)
 	// init gin
 	engine := setupRouter()
 	if err := engine.Run(configs.Config.Port); err != nil {

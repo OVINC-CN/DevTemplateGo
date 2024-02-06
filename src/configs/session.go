@@ -18,7 +18,7 @@ type sessionConfigModel struct {
 
 var SessionConfig = sessionConfigModel{
 	SessionCookieName:     buildSessionCookieName(),
-	SessionCookieAge:      int(utils.StrToInt(utils.GetEnv("SESSION_COOKIE_AGE", strconv.Itoa(60*60*24*7)))),
+	SessionCookieAge:      utils.StrToInt(utils.GetEnv("SESSION_COOKIE_AGE", strconv.Itoa(60*60*24*7))),
 	SessionCookiePath:     utils.GetEnv("SESSION_COOKIE_PATH", "/"),
 	SessionCookieDomain:   os.Getenv("SESSION_COOKIE_DOMAIN"),
 	SessionCookieSecure:   utils.StrToBool(utils.GetEnv("SESSION_COOKIE_SECURE", "false")),
