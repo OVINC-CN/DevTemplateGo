@@ -18,28 +18,33 @@ func setupRouter() (engine *gin.Engine) {
 	engine = gin.New()
 	engine.RedirectTrailingSlash = false
 	engine.Use(
+		middlewares.CORS(),
 		middlewares.Locale(),
 		middlewares.InitLogger(),
 		middlewares.RequestLogger(),
 		middlewares.Timeout(),
 		middlewares.Authenticate(),
 	)
+
 	// 注册校验器
 	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
 		_ = v.RegisterValidation("username", account.UsernameValidator)
 	}
+
 	// Home
 	homeGroup := engine.Group("/")
 	{
 		homeGroup.GET("", home.Home)
 		homeGroup.GET("/rum_config/", home.RumConfig)
 	}
+
 	// Account
 	accountGroup := engine.Group("/account/")
 	{
-		accountGroup.POST("/signin/", account.Login)
-		accountGroup.POST("/signup/", account.SignUp)
-		accountGroup.POST("/signout/", middlewares.LoginRequired(), account.SignOut)
+		accountGroup.POST("/sign_in/", account.Login)
+		accountGroup.POST("/sign_up/", account.SignUp)
+		accountGroup.POST("/sign_out/", middlewares.LoginRequired(), account.SignOut)
+		accountGroup.POST("/user_info/", middlewares.LoginRequired(), account.UserInfo)
 	}
 	return
 }
