@@ -2,6 +2,7 @@ package middlewares
 
 import (
 	"github.com/OVINC-CN/DevTemplateGo/src/configs"
+	ginI18n "github.com/gin-contrib/i18n"
 	"github.com/gin-contrib/timeout"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -14,7 +15,7 @@ func Timeout() gin.HandlerFunc {
 			c.Next()
 		}),
 		timeout.WithResponse(func(c *gin.Context) {
-			c.AbortWithStatusJSON(http.StatusGatewayTimeout, gin.H{"error": "timeout"})
+			c.AbortWithStatusJSON(http.StatusGatewayTimeout, gin.H{"error": ginI18n.MustGetMessage(c, "timeout")})
 		}),
 	)
 }

@@ -3,6 +3,7 @@ package middlewares
 import (
 	"github.com/OVINC-CN/DevTemplateGo/src/configs"
 	"github.com/OVINC-CN/DevTemplateGo/src/services/account"
+	ginI18n "github.com/gin-contrib/i18n"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -26,7 +27,7 @@ func LoginRequired() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		user := account.GetContextUser(c)
 		if user.Username == "" {
-			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "login required"})
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": ginI18n.MustGetMessage(c, "login required")})
 			return
 		}
 		c.Next()

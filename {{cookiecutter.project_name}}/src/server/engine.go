@@ -17,7 +17,13 @@ func setupRouter() (engine *gin.Engine) {
 	}
 	engine = gin.New()
 	engine.RedirectTrailingSlash = false
-	engine.Use(middlewares.InitLogger(), middlewares.RequestLogger(), middlewares.Timeout(), middlewares.Authenticate())
+	engine.Use(
+		middlewares.Locale(),
+		middlewares.InitLogger(),
+		middlewares.RequestLogger(),
+		middlewares.Timeout(),
+		middlewares.Authenticate(),
+	)
 	// 注册校验器
 	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
 		_ = v.RegisterValidation("username", account.UsernameValidator)

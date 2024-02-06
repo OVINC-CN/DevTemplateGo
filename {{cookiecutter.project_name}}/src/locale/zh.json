@@ -1,0 +1,8 @@
+{
+  "timeout": "请求超时",
+  "login required": "未登录",
+  "user not exists": "用户不存在",
+  "username or password invalid": "用户名或密码错误",
+  "sign up failed": "注册失败",
+  "session id not exist": "SessionID 不存在"
+}
