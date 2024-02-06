@@ -14,5 +14,7 @@ func InitLogger() gin.HandlerFunc {
 		logEntry := utils.Logger.WithFields(logrus.Fields{"request_id": requestID})
 		c.Set("logEntry", logEntry)
 		c.Next()
+		// 响应带上请求ID
+		c.Header("Request-ID", requestID)
 	}
 }
