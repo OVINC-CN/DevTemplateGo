@@ -37,13 +37,13 @@ func (user *User) CreateSessionID() (sessionID string) {
 	db.DB.Create(&UserSession{
 		Username:  user.Username,
 		SessionID: sessionID,
-		ExpiredAt: time.Now().Add(time.Duration(configs.SessionConfig.SessionCookieAge) * time.Second).UnixMilli(),
+		ExpiredAt: time.Now().Add(time.Duration(configs.Config.SessionCookieAge) * time.Second).UnixMilli(),
 	})
 	db.Redis.Set(
 		context.Background(),
 		sessionID,
 		user.Username,
-		time.Duration(configs.SessionConfig.SessionCookieAge)*time.Second,
+		time.Duration(configs.Config.SessionCookieAge)*time.Second,
 	)
 	return
 }

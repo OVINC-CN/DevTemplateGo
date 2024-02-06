@@ -10,6 +10,9 @@ import (
 )
 
 func startServer() {
+	var err error
+	// init config
+	configs.InitConfig()
 	// init log
 	utils.Logger = utils.InitLogger(
 		configs.Config.Debug,
@@ -18,17 +21,17 @@ func startServer() {
 	utils.DbLogger = utils.InitDBLogger(
 		configs.Config.Debug,
 		configs.Config.LogLevel,
-		configs.DBConfig.SlowThreshold,
+		configs.Config.DBSlowThreshold,
 	)
 	// init db
 	db.InitDBConnection(
-		configs.DBConfig.Host,
-		configs.DBConfig.Port,
-		configs.DBConfig.User,
-		configs.DBConfig.Password,
-		configs.DBConfig.Name,
-		configs.DBConfig.MaxConnections,
-		configs.DBConfig.ConnectionTimeOut,
+		configs.Config.DBHost,
+		configs.Config.DBPort,
+		configs.Config.DBUser,
+		configs.Config.DBPassword,
+		configs.Config.DBName,
+		configs.Config.DBMaxConnections,
+		configs.Config.DBConnectionTimeOut,
 		&gorm.Config{
 			Logger: utils.DbLogger,
 		},
@@ -36,11 +39,11 @@ func startServer() {
 	migrate()
 	// init redis
 	db.InitRedisConnection(
-		configs.RedisConfig.Host,
-		configs.RedisConfig.Port,
-		configs.RedisConfig.Password,
-		configs.RedisConfig.DB,
-		configs.RedisConfig.MaxConnections,
+		configs.Config.RedisHost,
+		configs.Config.RedisPort,
+		configs.Config.RedisPassword,
+		configs.Config.RedisDB,
+		configs.Config.RedisMaxConnections,
 	)
 	// init cpu
 	threads := runtime.NumCPU()
@@ -48,11 +51,10 @@ func startServer() {
 	utils.Logger.Infof("[InitCPUSuccess] Runs on %d CPUs", threads)
 	// init gin
 	engine := setupRouter()
-	var err error
 	if configs.Config.TLSCert != "" {
-		err = engine.RunTLS(configs.Config.Port, configs.Config.TLSCert, configs.Config.TLSKey)
+		err = engine.RunTLS(configs.Config.Addr, configs.Config.TLSCert, configs.Config.TLSKey)
 	} else {
-		err = engine.Run(configs.Config.Port)
+		err = engine.Run(configs.Config.Addr)
 	}
 	if err != nil {
 		utils.Logger.Infof("[ServerStartFailed] %s", err)

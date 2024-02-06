@@ -11,7 +11,7 @@ import (
 func Authenticate() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 获取用户身份
-		sessionID, err := c.Cookie(configs.SessionConfig.SessionCookieName)
+		sessionID, err := c.Cookie(configs.Config.SessionCookieName)
 		if err == nil {
 			user := account.User{}
 			user.LoadUserBySessionID(sessionID)

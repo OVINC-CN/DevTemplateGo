@@ -35,13 +35,13 @@ func SignIn(c *gin.Context) {
 	sessionID := user.CreateSessionID()
 	// 响应
 	c.SetCookie(
-		configs.SessionConfig.SessionCookieName,
+		configs.Config.SessionCookieName,
 		sessionID,
-		configs.SessionConfig.SessionCookieAge,
-		configs.SessionConfig.SessionCookiePath,
-		configs.SessionConfig.SessionCookieDomain,
-		configs.SessionConfig.SessionCookieSecure,
-		configs.SessionConfig.SessionCookieHttpOnly,
+		configs.Config.SessionCookieAge,
+		configs.Config.SessionCookiePath,
+		configs.Config.SessionCookieDomain,
+		configs.Config.SessionCookieSecure,
+		configs.Config.SessionCookieHttpOnly,
 	)
 	c.JSON(http.StatusOK, gin.H{"data": gin.H{}})
 }
@@ -71,32 +71,32 @@ func SignUp(c *gin.Context) {
 	sessionID := user.CreateSessionID()
 	// 响应
 	c.SetCookie(
-		configs.SessionConfig.SessionCookieName,
+		configs.Config.SessionCookieName,
 		sessionID,
-		configs.SessionConfig.SessionCookieAge,
-		configs.SessionConfig.SessionCookiePath,
-		configs.SessionConfig.SessionCookieDomain,
-		configs.SessionConfig.SessionCookieSecure,
-		configs.SessionConfig.SessionCookieHttpOnly,
+		configs.Config.SessionCookieAge,
+		configs.Config.SessionCookiePath,
+		configs.Config.SessionCookieDomain,
+		configs.Config.SessionCookieSecure,
+		configs.Config.SessionCookieHttpOnly,
 	)
 	c.JSON(http.StatusOK, gin.H{"data": gin.H{}})
 }
 
 func SignOut(c *gin.Context) {
-	sessionID, err := c.Cookie(configs.SessionConfig.SessionCookieName)
+	sessionID, err := c.Cookie(configs.Config.SessionCookieName)
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusOK, gin.H{"error": ginI18n.MustGetMessage(c, SessionIDNotExists.Error())})
 		return
 	}
 	db.Redis.Del(context.Background(), sessionID)
 	c.SetCookie(
-		configs.SessionConfig.SessionCookieName,
+		configs.Config.SessionCookieName,
 		sessionID,
 		-1,
-		configs.SessionConfig.SessionCookiePath,
-		configs.SessionConfig.SessionCookieDomain,
-		configs.SessionConfig.SessionCookieSecure,
-		configs.SessionConfig.SessionCookieHttpOnly,
+		configs.Config.SessionCookiePath,
+		configs.Config.SessionCookieDomain,
+		configs.Config.SessionCookieSecure,
+		configs.Config.SessionCookieHttpOnly,
 	)
 	c.JSON(http.StatusOK, gin.H{"data": gin.H{}})
 }
