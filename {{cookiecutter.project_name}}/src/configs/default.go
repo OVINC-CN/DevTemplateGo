@@ -16,6 +16,8 @@ type configModel struct {
 	RequestTimeout time.Duration
 	TLSCert        string
 	TLSKey         string
+	RUMID          string
+	RUMHost        string
 }
 
 var Config = configModel{
@@ -27,4 +29,6 @@ var Config = configModel{
 	RequestTimeout: time.Duration(utils.StrToInt(utils.GetEnv("REQUEST_TIMEOUT", "10"))) * time.Second,
 	TLSCert:        utils.GetEnv("TLS_CERT", ""),
 	TLSKey:         utils.GetEnv("TLS_KEY", ""),
+	RUMID:          utils.GetEnv("RUM_ID", ""),
+	RUMHost:        utils.GetEnv("RUM_HOST", "https://rumt-zh.com"),
 }

@@ -32,6 +32,7 @@ func setupRouter() (engine *gin.Engine) {
 	homeGroup := engine.Group("/")
 	{
 		homeGroup.GET("", home.Home)
+		homeGroup.GET("/rum_config/", home.RumConfig)
 	}
 	// Account
 	accountGroup := engine.Group("/account/")
