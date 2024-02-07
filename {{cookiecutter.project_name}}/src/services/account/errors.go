@@ -6,8 +6,8 @@ import (
 )
 
 var (
-	SignInFailed       = core.NewError(http.StatusUnauthorized, "username or password invalid", &map[string]any{})
-	SignUpFailed       = core.NewError(http.StatusBadRequest, "sign up failed", &map[string]any{})
-	SessionIDNotExists = core.NewError(http.StatusBadRequest, "session id not exist", &map[string]any{})
-	UserNotExist       = core.NewError(http.StatusNotFound, "user not exist", &map[string]any{})
+	SignInFailed       = core.NewError(http.StatusUnauthorized, "username or password invalid", nil)
+	SignUpFailed       = core.NewError(http.StatusBadRequest, "sign up failed", nil)
+	SessionIDNotExists = core.NewError(http.StatusBadRequest, "session id not exist", nil)
+	UserNotExist       = core.NewError(http.StatusNotFound, "user not exist", nil)
 )

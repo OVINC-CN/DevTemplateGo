@@ -23,5 +23,5 @@ func NewError(status int, message string, detail *map[string]any) *APIError {
 }
 
 var (
-	LoginRequired = NewError(http.StatusUnauthorized, "login required", &map[string]any{})
+	LoginRequired = NewError(http.StatusUnauthorized, "login required", nil)
 )

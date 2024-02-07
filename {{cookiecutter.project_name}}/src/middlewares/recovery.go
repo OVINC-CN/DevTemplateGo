@@ -2,9 +2,11 @@ package middlewares
 
 import (
 	"github.com/OVINC-CN/DevTemplateGo/src/core"
+	"github.com/OVINC-CN/DevTemplateGo/src/utils"
 	ginI18n "github.com/gin-contrib/i18n"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"runtime/debug"
 )
 
 func Recovery() gin.HandlerFunc {
@@ -13,6 +15,7 @@ func Recovery() gin.HandlerFunc {
 			if p := recover(); p != nil {
 				switch err := p.(type) {
 				case *core.APIError:
+					utils.ContextInfof(c, "[RequestError] %s %v", err.Error(), err.Detail)
 					message, translateError := ginI18n.GetMessage(c, err.Error())
 					if translateError != nil {
 						message = err.Error()
@@ -27,6 +30,7 @@ func Recovery() gin.HandlerFunc {
 						},
 					)
 				case error:
+					utils.ContextErrorf(c, "[ServerError] %s\n%s", p, debug.Stack())
 					message, translateError := ginI18n.GetMessage(c, err.Error())
 					if translateError != nil {
 						message = err.Error()
@@ -41,6 +45,7 @@ func Recovery() gin.HandlerFunc {
 						},
 					)
 				default:
+					utils.ContextErrorf(c, "[ServerError] %s\n%s", p, debug.Stack())
 					c.AbortWithStatus(http.StatusInternalServerError)
 				}
 			}

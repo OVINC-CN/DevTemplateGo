@@ -17,8 +17,7 @@ func GetContextUser(c *gin.Context) *User {
 
 func LoadUserBySessionID(sessionID string) *User {
 	result := db.Redis.Get(context.Background(), "sessionID", sessionID)
-	var user *User
-	user.Username = result.Val()
+	user := &User{Username: result.Val()}
 	dbResult := db.DB.First(user)
 	if dbResult.Error == nil {
 		return user
