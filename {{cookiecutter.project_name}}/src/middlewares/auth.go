@@ -27,7 +27,14 @@ func LoginRequired() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		user := account.GetContextUser(c)
 		if user.Username == "" {
-			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": ginI18n.MustGetMessage(c, "login required")})
+			c.AbortWithStatusJSON(
+				http.StatusUnauthorized,
+				gin.H{
+					"error": gin.H{
+						"message": ginI18n.MustGetMessage(c, "login required"),
+					},
+				},
+			)
 			return
 		}
 		c.Next()

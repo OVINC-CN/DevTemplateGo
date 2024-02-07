@@ -15,7 +15,14 @@ func Timeout() gin.HandlerFunc {
 			c.Next()
 		}),
 		timeout.WithResponse(func(c *gin.Context) {
-			c.AbortWithStatusJSON(http.StatusGatewayTimeout, gin.H{"error": ginI18n.MustGetMessage(c, "timeout")})
+			c.AbortWithStatusJSON(
+				http.StatusGatewayTimeout,
+				gin.H{
+					"error": gin.H{
+						"message": ginI18n.MustGetMessage(c, "timeout"),
+					},
+				},
+			)
 		}),
 	)
 }
