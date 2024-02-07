@@ -15,24 +15,28 @@ type redisClient struct {
 	backend *redis.Client
 }
 
+func (client *redisClient) buildCacheKey(keyType, key string) string {
+	return fmt.Sprintf("%s:%s:%s", configs.Config.RedisPrefix, keyType, key)
+}
+
 func (client *redisClient) Ping(ctx context.Context) *redis.StatusCmd {
 	return client.backend.Ping(ctx)
 }
 
 func (client *redisClient) Set(ctx context.Context, keyType, key string, value interface{}, expiration time.Duration) *redis.StatusCmd {
-	cacheKey := fmt.Sprintf("%s:%s:%s", configs.Config.RedisPrefix, keyType, key)
+	cacheKey := client.buildCacheKey(keyType, key)
 	return client.backend.Set(ctx, cacheKey, value, expiration)
 }
 
 func (client *redisClient) Get(ctx context.Context, keyType, key string) *redis.StringCmd {
-	cacheKey := fmt.Sprintf("%s:%s:%s", configs.Config.RedisPrefix, keyType, key)
+	cacheKey := client.buildCacheKey(keyType, key)
 	return client.backend.Get(ctx, cacheKey)
 }
 
 func (client *redisClient) Del(ctx context.Context, keyType string, keys ...string) *redis.IntCmd {
 	var cacheKeys []string
-	for index := range keys {
-		cacheKeys = append(cacheKeys, fmt.Sprintf("%s:%s:%s", configs.Config.RedisPrefix, keyType, keys[index]))
+	for _, key := range keys {
+		cacheKeys = append(cacheKeys, client.buildCacheKey(keyType, key))
 	}
 	return client.backend.Del(ctx, cacheKeys...)
 }
