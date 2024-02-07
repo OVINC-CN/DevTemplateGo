@@ -18,11 +18,11 @@ func setupRouter() (engine *gin.Engine) {
 	engine = gin.New()
 	engine.RedirectTrailingSlash = false
 	engine.Use(
+		middlewares.Recovery(),
 		middlewares.CORS(),
 		middlewares.Locale(),
 		middlewares.InitLogger(),
 		middlewares.RequestLogger(),
-		middlewares.Timeout(),
 		middlewares.Authenticate(),
 	)
 

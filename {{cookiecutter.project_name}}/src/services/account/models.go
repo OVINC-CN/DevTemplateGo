@@ -10,11 +10,16 @@ import (
 )
 
 type User struct {
-	Username string `json:"username" gorm:"primaryKey"`
-	NickName string `json:"nick_name"`
-	Password string `json:"password"`
-	JoinAt   int64  `json:"join_at" gorm:"autoCreateTime:milli"`
-	Enabled  bool   `json:"enabled"`
+	Username      string `json:"username" gorm:"primaryKey"`
+	NickName      string `json:"nick_name"`
+	Password      string `json:"password"`
+	PhoneNumber   string `json:"phone_number"`
+	Email         string `json:"email"`
+	WeChatOpenID  string `json:"wechat_open_id"`
+	WeChatUnionID string `json:"wechat_union_id"`
+	WeChatAvatar  string `json:"wechat_avatar"`
+	JoinAt        int64  `json:"join_at" gorm:"autoCreateTime:milli"`
+	Enabled       bool   `json:"enabled"`
 }
 
 func (user *User) SetPassword(password string) (err error) {
@@ -47,12 +52,6 @@ func (user *User) CreateSessionID() (sessionID string) {
 		time.Duration(configs.Config.SessionCookieAge)*time.Second,
 	)
 	return
-}
-
-func (user *User) LoadUserBySessionID(sessionID string) {
-	result := db.Redis.Get(context.Background(), "sessionID", sessionID)
-	user.Username = result.Val()
-	db.DB.First(user)
 }
 
 type UserSession struct {

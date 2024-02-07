@@ -4,5 +4,6 @@
   "user not exists": "User invalid",
   "username or password invalid": "Username or password invalid",
   "sign up failed": "Sign up failed",
-  "session id not exist": "SessionID invalid"
+  "session id not exist": "SessionID invalid",
+  "token invalid": "Token Invalid"
 }

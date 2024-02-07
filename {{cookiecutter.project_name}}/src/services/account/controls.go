@@ -3,9 +3,8 @@ package account
 import (
 	"context"
 	"github.com/OVINC-CN/DevTemplateGo/src/configs"
+	"github.com/OVINC-CN/DevTemplateGo/src/core"
 	"github.com/OVINC-CN/DevTemplateGo/src/db"
-	"github.com/OVINC-CN/DevTemplateGo/src/utils"
-	ginI18n "github.com/gin-contrib/i18n"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -14,43 +13,19 @@ func SignIn(c *gin.Context) {
 	// 验证请求
 	var form loginForm
 	if err := c.ShouldBind(&form); err != nil {
-		c.AbortWithStatusJSON(
-			http.StatusBadRequest,
-			gin.H{
-				"error": gin.H{
-					"message": err.Error(),
-				},
-			},
-		)
-		return
+		panic(core.NewError(http.StatusBadRequest, err.Error(), nil))
 	}
 	// 获取用户
 	user := User{Username: form.Username}
 	result := db.DB.First(&user)
 	if result.RowsAffected == 0 {
-		c.AbortWithStatusJSON(
-			http.StatusNotFound,
-			gin.H{
-				"error": gin.H{
-					"message": ginI18n.MustGetMessage(c, "user not exists"),
-				},
-			},
-		)
-		return
+		panic(UserNotExist)
 	}
 	// 校验密码
 	passResult := user.CheckPassword(form.Password)
 	// 不通过，报错
 	if !passResult {
-		c.AbortWithStatusJSON(
-			http.StatusForbidden,
-			gin.H{
-				"error": gin.H{
-					"message": ginI18n.MustGetMessage(c, "username or password invalid"),
-				},
-			},
-		)
-		return
+		panic(SignInFailed)
 	}
 	// 通过，发放令牌
 	sessionID := user.CreateSessionID()
@@ -71,43 +46,17 @@ func SignUp(c *gin.Context) {
 	// 验证请求
 	var form signUpForm
 	if err := c.ShouldBind(&form); err != nil {
-		c.AbortWithStatusJSON(
-			http.StatusBadRequest,
-			gin.H{
-				"error": gin.H{
-					"message": err.Error(),
-				},
-			},
-		)
-		return
+		panic(core.NewError(http.StatusBadRequest, err.Error(), nil))
 	}
 	// 创建用户
 	user := &User{Username: form.Username, NickName: form.Nickname, Enabled: true}
 	err := user.SetPassword(form.Password)
 	if err != nil {
-		utils.ContextErrorf(c, "[SignUpFailed] %s", err.Error())
-		c.AbortWithStatusJSON(
-			http.StatusInternalServerError,
-			gin.H{
-				"error": gin.H{
-					"message": ginI18n.MustGetMessage(c, SignUpFailed.Error()),
-				},
-			},
-		)
-		return
+		panic(SignUpFailed)
 	}
 	createResult := db.DB.Create(user)
 	if createResult.Error != nil {
-		utils.ContextErrorf(c, "[SignUpFailed] %s", createResult.Error.Error())
-		c.AbortWithStatusJSON(
-			http.StatusInternalServerError,
-			gin.H{
-				"error": gin.H{
-					"message": ginI18n.MustGetMessage(c, SignUpFailed.Error()),
-				},
-			},
-		)
-		return
+		panic(SignUpFailed)
 	}
 	// 发放令牌
 	sessionID := user.CreateSessionID()
@@ -127,15 +76,7 @@ func SignUp(c *gin.Context) {
 func SignOut(c *gin.Context) {
 	sessionID, err := c.Cookie(configs.Config.SessionCookieName)
 	if err != nil {
-		c.AbortWithStatusJSON(
-			http.StatusOK,
-			gin.H{
-				"error": gin.H{
-					"message": ginI18n.MustGetMessage(c, SessionIDNotExists.Error()),
-				},
-			},
-		)
-		return
+		panic(SessionIDNotExists)
 
 	}
 	db.Redis.Del(context.Background(), "sessionID", sessionID)
