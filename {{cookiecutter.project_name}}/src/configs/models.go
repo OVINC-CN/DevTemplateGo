@@ -14,7 +14,7 @@ type configModel struct {
 	traceConfigModel
 	corsConfigModel
 	dbConfigModel
-	ConfigModel
+	sessionConfigModel
 	redisConfigModel
 }
 
@@ -43,7 +43,7 @@ type dbConfigModel struct {
 	DBSlowThreshold     time.Duration
 }
 
-type ConfigModel struct {
+type sessionConfigModel struct {
 	SessionCookieName     string
 	SessionCookieAge      int
 	SessionCookiePath     string

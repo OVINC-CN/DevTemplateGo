@@ -25,7 +25,7 @@ func InitConfig() {
 			TLSCert:        utils.GetEnv("TLS_CERT", ""),
 			TLSKey:         utils.GetEnv("TLS_KEY", ""),
 		},
-		ConfigModel: ConfigModel{
+		sessionConfigModel: sessionConfigModel{
 			SessionCookieName:     buildSessionCookieName(),
 			SessionCookieAge:      utils.StrToInt(utils.GetEnv("SESSION_COOKIE_AGE", strconv.Itoa(60*60*24*7))),
 			SessionCookiePath:     utils.GetEnv("SESSION_COOKIE_PATH", "/"),
