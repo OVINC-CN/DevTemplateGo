@@ -41,6 +41,7 @@ func (user *User) CreateSessionID() (sessionID string) {
 	})
 	db.Redis.Set(
 		context.Background(),
+		"sessionID",
 		sessionID,
 		user.Username,
 		time.Duration(configs.Config.SessionCookieAge)*time.Second,
@@ -49,7 +50,7 @@ func (user *User) CreateSessionID() (sessionID string) {
 }
 
 func (user *User) LoadUserBySessionID(sessionID string) {
-	result := db.Redis.Get(context.Background(), sessionID)
+	result := db.Redis.Get(context.Background(), "sessionID", sessionID)
 	user.Username = result.Val()
 	db.DB.First(user)
 }

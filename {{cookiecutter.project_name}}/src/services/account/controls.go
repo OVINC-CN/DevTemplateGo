@@ -138,7 +138,7 @@ func SignOut(c *gin.Context) {
 		return
 
 	}
-	db.Redis.Del(context.Background(), sessionID)
+	db.Redis.Del(context.Background(), "sessionID", sessionID)
 	c.SetCookie(
 		configs.Config.SessionCookieName,
 		sessionID,
